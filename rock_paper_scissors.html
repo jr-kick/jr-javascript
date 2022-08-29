@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>            
+        function getComputerChoice() {
+            
+            let words = ["rock", "paper", "scissors"];
+            
+            let randomWord = words[Math.floor(Math.random()*words.length)];
+            
+            return randomWord;
+        };
+
+        var oneRoundResult;
+
+        var playerScore = 0;
+
+        var computerScore = 0;
+    
+        function playRound(playerSelection, computerSelection) {
+
+            playerSelection = prompt("What tool do you choose?", "rock, paper, scissors");
+
+            playerSelection = playerSelection.toLowerCase();
+
+            // >>> Draw <<<
+            //_________________________________________________________________________
+            if (playerSelection == "rock" && computerSelection == "rock") {
+                console.log("Computer: \"rock!\" Human: \"rock!\"");
+                oneRoundResult = "Draw";
+                return oneRoundResult;
+            }
+            
+            else if (playerSelection == "paper" && computerSelection == "paper") {
+                console.log("Computer: \"paper!\" Human: \"paper!\"");
+                oneRoundResult = "Draw";
+                return oneRoundResult;
+            }
+
+            else if (playerSelection == "scissors" && computerSelection == "scissors") {
+                console.log("Computer: \"scissors!\" Human: \"scissors!\"");
+                oneRoundResult = "Draw";
+                return oneRoundResult;
+            }
+            //_________________________________________________________________________
+
+            // >>> Human wins <<<
+            //_________________________________________________________________________
+            else if (playerSelection == "rock" && computerSelection == "scissors") {
+                console.log("Computer: \"scissors!\" Human: \"rock!\"");
+                oneRoundResult = "You win!";
+                return oneRoundResult;
+            }
+
+            else if (playerSelection == "paper" && computerSelection == "rock") {
+                console.log("Computer: \"rock!\" Human: \"paper!\"");
+                oneRoundResult = "You win!";
+                return oneRoundResult;
+            }
+            
+            else if (playerSelection == "scissors" && computerSelection == "paper") {
+                console.log("Computer: \"paper!\" Human: \"scissors!\"");
+                oneRoundResult = "You win!";
+                return oneRoundResult;
+            }
+            //_________________________________________________________________________
+
+            // >>> Computer wins <<<
+            //_________________________________________________________________________
+            else if (computerSelection == "rock" && playerSelection == "scissors") {
+                console.log("Computer: \"rock!\ Human: \"scissors!\"");
+                oneRoundResult = "Computer wins!";
+                return oneRoundResult;
+            }
+
+            else if (computerSelection == "paper" && playerSelection == "rock") {
+                console.log("Computer: \"paper!\ Human: \"rock!\"");
+                oneRoundResult = "Computer wins!";
+                return oneRoundResult;
+            }
+            
+            else if (computerSelection == "scissors" && playerSelection == "paper") {
+                console.log("Computer: \"scissors!\" Human: \"paper!\"");
+                oneRoundResult = "Computer wins!";
+                return oneRoundResult;
+            }
+            //_________________________________________________________________________
+
+            else if (!(playerSelection == "paper" && "rock" && "scissors")) {
+                oneRoundResult = "Wrong tool!";
+                return oneRoundResult;
+            }
+        };
+
+        let playerSelection;
+
+        let computerSelection;
+
+        function game() {
+            for (let i = 0; i < 5; i++) {
+                
+                getComputerChoice();
+
+                computerSelection = getComputerChoice();
+
+                playRound(playerSelection, computerSelection)[i];
+
+                if (oneRoundResult == "You win!") {
+                    playerScore++;
+                    console.log(oneRoundResult);
+                } else if (oneRoundResult == "Computer wins!") {
+                    computerScore++;
+                    console.log(oneRoundResult);
+                } else if (oneRoundResult == "Wrong tool!" || "Draw") {
+                    console.log(oneRoundResult);
+                    i--;
+                };
+
+                console.log(playerScore, computerScore);
+            };
+        };
+
+        game();
+    </script>
+</body>
+</html>
