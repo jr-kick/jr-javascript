@@ -5,9 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="buttons">
+        <button value="rock">Rock</button>
+        <button value="paper">Paper</button>
+        <button value="scissors">Scissors</button>
+    </div>
+    <div id="players">
+        <div>
+            Computer:
+            <p id="c_count"></p>
+        </div>
+        <div>
+            Hooman:
+            <p id="h_count"></p>
+        </div>
+    </div>
+    <div id="results"></div>
     <script>
+
         function getComputerChoice() {
             
             let words = ["rock", "paper", "scissors"];
@@ -16,138 +34,69 @@
             
             return randomWord;
         };
-
-        var tools;
-
-        var oneRoundResult;
-
-        var playerScore = 0;
-
-        var computerScore = 0;
     
-        function playRound(playerSelection, computerSelection) {
+        function game(playerSelection, computerSelection) {
 
-            playerSelection = prompt("What tool do you choose?", "rock, paper, scissors");
-
-            playerSelection = playerSelection.toLowerCase();
-
-            // >>> Draw <<<
-            //_________________________________________________________________________
-            if (playerSelection == "rock" && computerSelection == "rock") {
-                tools = "Computer: \"rock!\" Human: \"rock!\"";
-                oneRoundResult = "Draw";
-                return oneRoundResult;
-            }
-            
-            else if (playerSelection == "paper" && computerSelection == "paper") {
-                tools = "Computer: \"paper!\" Human: \"paper!\"";
-                oneRoundResult = "Draw";
-                return oneRoundResult;
-            }
-
-            else if (playerSelection == "scissors" && computerSelection == "scissors") {
-                tools = "Computer: \"scissors!\" Human: \"scissors!\"";
-                oneRoundResult = "Draw";
-                return oneRoundResult;
-            }
-            //_________________________________________________________________________
-
-            // >>> Human wins <<<
-            //_________________________________________________________________________
-            else if (playerSelection == "rock" && computerSelection == "scissors") {
-                tools = "Computer: \"scissors!\" Human: \"rock!\"";
-                oneRoundResult = "You win!";
-                return oneRoundResult;
-            }
-
-            else if (playerSelection == "paper" && computerSelection == "rock") {
-                tools = "Computer: \"rock!\" Human: \"paper!\"";
-                oneRoundResult = "You win!";
-                return oneRoundResult;
-            }
-            
-            else if (playerSelection == "scissors" && computerSelection == "paper") {
-                tools = "Computer: \"paper!\" Human: \"scissors!\"";
-                oneRoundResult = "You win!";
-                return oneRoundResult;
-            }
-            //_________________________________________________________________________
-
-            // >>> Computer wins <<<
-            //_________________________________________________________________________
-            else if (computerSelection == "rock" && playerSelection == "scissors") {
-                tools = "Computer: \"rock!\ Human: \"scissors!\"";
-                oneRoundResult = "Computer wins!";
-                return oneRoundResult;
-            }
-
-            else if (computerSelection == "paper" && playerSelection == "rock") {
-                tools = "Computer: \"paper!\ Human: \"rock!\"";
-                oneRoundResult = "Computer wins!";
-                return oneRoundResult;
-            }
-            
-            else if (computerSelection == "scissors" && playerSelection == "paper") {
-                tools = "Computer: \"scissors!\" Human: \"paper!\"";
-                oneRoundResult = "Computer wins!";
-                return oneRoundResult;
-            }
-            //_________________________________________________________________________
-
-            else if (!(playerSelection == "paper" && "rock" && "scissors")) {
-                oneRoundResult = "Wrong tool!";
-                return oneRoundResult;
-            }
-        };
-
-        let playerSelection;
-
-        let computerSelection;
-
-        function game() {
-            for (let i = 0; i < 5; i++) {
-
-                let question;
-            
-                getComputerChoice();
-
-                computerSelection = getComputerChoice();
-
-                playRound(playerSelection, computerSelection)[i];
-
-                if (oneRoundResult == "You win!") {
-                    playerScore++;
-                } else if (oneRoundResult == "Computer wins!") {
-                    computerScore++;
-                } else if (oneRoundResult == "Draw") {
-                    i--;
-                };
-                if (oneRoundResult == "Wrong tool!") {
-                    i--;
-                    alert(oneRoundResult);
-                } else alert(oneRoundResult + "\n" + tools + "\nComputer: " + computerScore + " Hooman: " + playerScore);
-
-                if (i == 4) {
-                if (computerScore > playerScore) {
-                    alert("Computer wins!");
-                } else if (computerScore < playerScore) {
-                    alert("Hooman wins!");
-                }
-                question = prompt("Wanna continue?", "Yes, No");
-
-                if (question.toLowerCase() == "yes") {
-                    i = -1;
-                    playerScore = 0;
-                    computerScore = 0;
+            if (playerSelection == computerSelection) {
+                results.textContent = 'Draw';
+            } else if (playerSelection == 'rock') {
+                if (computerSelection == 'scissors') {
+                    results.textContent = 'Hooman Wins';
                 } else {
-                alert("Thanks for playing!");
-                break;}
+                    results.textContent = 'Computer Wins';
+                };
+            } else if (playerSelection == 'paper') {
+                if (computerSelection == 'rock') {
+                    results.textContent = 'Hooman Wins';
+                } else {
+                    results.textContent = 'Computer Wins';
                 }
+            } else if (playerSelection == 'scissors') {
+                if (computerSelection == 'paper') {
+                    results.textContent = 'Hooman Wins';
+                } else {
+                    results.textContent = 'Computer Wins';
+                }
+            };
 
+            if (results.textContent == 'Draw') {
+                return;
+            } else if (results.textContent == 'Hooman Wins') {
+                playerScore.textContent++;
+            } else {
+                computerScore.textContent++;
+            };
+
+            if (computerScore.textContent == 5) {
+                alert('You lose');
+                computerScore.textContent = 0;
+                playerScore.textContent = 0;
+                results.textContent = '';
+            } else if (playerScore.textContent == 5) {
+                alert('You win');
+                computerScore.textContent = 0;
+                playerScore.textContent = 0;
+                results.textContent = '';
             };
         };
+        
+        const buttons = document.querySelectorAll('#buttons>button');
+        
+        const results = document.querySelector('#results');
 
-        game();
+        
+        const computerScore = document.getElementById('c_count');
+        computerScore.textContent = 0;
+        
+        const playerScore = document.getElementById('h_count');
+        playerScore.textContent = 0;
+        
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                game(button.value, getComputerChoice());
+            });
+        });
+
     </script>
 </body>
 </html>
